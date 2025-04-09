@@ -18,12 +18,10 @@ Implementing a complete machine learning pipeline with Apache Spark's MLlib in o
 - Combined features using `VectorAssembler`
 
 **Sample Output:**
-=== Data Preprocessing === Sample processed rows (features and label): 
-Row(features=SparseVector(10, {0: 1.0, 3: 1.0, 5: 1.0, 7: 0.0, 9: 29.85}), label=0.0)  
-Row(features=SparseVector(10, {1: 1.0, 3: 1.0, 6: 1.0, 8: 0.0, 9: 1889.5}), label=0.0)  
-Row(features=SparseVector(10, {0: 1.0, 4: 1.0, 5: 1.0, 7: 0.0, 9: 108.15}), label=1.0)  
-
-
+=== Data Preprocessing === Sample processed rows (features and label):
+Row(features=SparseVector(10, {0: 1.0, 3: 1.0, 5: 1.0, 7: 0.0, 9: 29.85}), label=0.0)
+Row(features=SparseVector(10, {1: 1.0, 3: 1.0, 6: 1.0, 8: 0.0, 9: 1889.5}), label=0.0)
+Row(features=SparseVector(10, {0: 1.0, 4: 1.0, 5: 1.0, 7: 0.0, 9: 108.15}), label=1.0)
 
 ---
 
