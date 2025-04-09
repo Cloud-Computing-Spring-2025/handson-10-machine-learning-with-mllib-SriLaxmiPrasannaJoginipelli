@@ -18,7 +18,10 @@ Implementing a complete machine learning pipeline with Apache Spark's MLlib in o
 - Combined features using `VectorAssembler`
 
 **Sample Output:**
-=== Data Preprocessing === Sample processed rows (features and label): [Row(features=SparseVector(10, {0: 1.0, 3: 1.0, 5: 1.0, 7: 0.0, 9: 29.85}), label=0.0), Row(features=SparseVector(10, {1: 1.0, 3: 1.0, 6: 1.0, 8: 0.0, 9: 1889.5}), label=0.0), Row(features=SparseVector(10, {0: 1.0, 4: 1.0, 5: 1.0, 7: 0.0, 9: 108.15}), label=1.0)]
+=== Data Preprocessing === Sample processed rows (features and label): 
+-[Row(features=SparseVector(10, {0: 1.0, 3: 1.0, 5: 1.0, 7: 0.0, 9: 29.85}), label=0.0), 
+-Row(features=SparseVector(10, {1: 1.0, 3: 1.0, 6: 1.0, 8: 0.0, 9: 1889.5}), label=0.0), 
+-Row(features=SparseVector(10, {0: 1.0, 4: 1.0, 5: 1.0, 7: 0.0, 9: 108.15}), label=1.0)]
 
 
 ---
@@ -42,7 +45,10 @@ Implementing a complete machine learning pipeline with Apache Spark's MLlib in o
 - Used `ChiSqSelector` to choose top 5 most relevant features
 
 **Sample Output:**
-=== Feature Selection (Chi-Square) === Top 5 selected features (first 5 rows): [Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 29.85}), label=0.0), Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 0.0, 3: 0.0, 4: 1889.5}), label=0.0), Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 108.15}), label=1.0)]
+=== Feature Selection (Chi-Square) === Top 5 selected features (first 5 rows): 
+-[Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 29.85}), label=0.0), 
+-Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 0.0, 3: 0.0, 4: 1889.5}), label=0.0), 
+-Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 108.15}), label=1.0)]
 
 
 ---
@@ -55,7 +61,12 @@ Implementing a complete machine learning pipeline with Apache Spark's MLlib in o
 - Evaluated models using AUC
 
 **Sample Output:**
-=== Model Tuning and Comparison === LogisticRegression AUC: 0.7730 DecisionTree AUC: 0.7290 RandomForest AUC: 0.8448 GBTClassifier AUC: 0.7620 Best model: RandomForest with AUC = 0.8448
+=== Model Tuning and Comparison === 
+-LogisticRegression AUC: 0.7730 
+-DecisionTree AUC: 0.7290 
+-RandomForest AUC: 0.8448 
+-GBTClassifier AUC: 0.7620 
+-Best model: RandomForest AUC = 0.8448
 
 
 ---
