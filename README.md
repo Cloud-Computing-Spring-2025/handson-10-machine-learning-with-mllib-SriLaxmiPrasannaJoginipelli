@@ -1,146 +1,91 @@
-# handson-10-MachineLearning-with-MLlib.
+# 📊 Customer Churn Prediction using Apache Spark MLlib
 
-#  Customer Churn Prediction with MLlib
+## 📌 Objective
 
-This project uses Apache Spark MLlib to predict customer churn based on structured customer data. You will preprocess data, train classification models, perform feature selection, and tune hyperparameters using cross-validation.
-
----
-
-
-
-Build and compare machine learning models using PySpark to predict whether a customer will churn based on their service usage and subscription features.
+Implementing a complete machine learning pipeline with Apache Spark's MLlib in order to forecast customer attrition is the aim of this project. We cover feature engineering, model training, feature selection, hyperparameter adjustment, and data preprocessing.
 
 ---
 
-##  Dataset
-
-The dataset used is `customer_churn.csv`, which includes features like:
-
-- `gender`, `SeniorCitizen`, `tenure`, `PhoneService`, `InternetService`, `MonthlyCharges`, `TotalCharges`, `Churn` (label), etc.
+## Task-wise Breakdown with Sample Outputs
 
 ---
-
-##  Tasks
 
 ### Task 1: Data Preprocessing and Feature Engineering
 
-**Objective:**  
-Clean the dataset and prepare features for ML algorithms.
+**Description:**
+- Filled missing values in `TotalCharges` with `0.0`
+- Applied `StringIndexer` and `OneHotEncoder` to categorical columns (`gender`, `PhoneService`, `InternetService`)
+- Combined features using `VectorAssembler`
 
-**Steps:**
-1. Fill missing values in `TotalCharges` with 0.
-2. Encode categorical features using `StringIndexer` and `OneHotEncoder`.
-3. Assemble numeric and encoded features into a single feature vector with `VectorAssembler`.
+**Sample Output:**
+=== Data Preprocessing === Sample processed rows (features and label): [Row(features=SparseVector(10, {0: 1.0, 3: 1.0, 5: 1.0, 7: 0.0, 9: 29.85}), label=0.0), Row(features=SparseVector(10, {1: 1.0, 3: 1.0, 6: 1.0, 8: 0.0, 9: 1889.5}), label=0.0), Row(features=SparseVector(10, {0: 1.0, 4: 1.0, 5: 1.0, 7: 0.0, 9: 108.15}), label=1.0)]
 
-**Code Output:**
 
-```
-+--------------------+-----------+
-|features            |ChurnIndex |
-+--------------------+-----------+
-|[0.0,12.0,29.85,29...|0.0        |
-|[0.0,1.0,56.95,56....|1.0        |
-|[1.0,5.0,53.85,108...|0.0        |
-|[0.0,2.0,42.30,184...|1.0        |
-|[0.0,8.0,70.70,151...|0.0        |
-+--------------------+-----------+
-```
 ---
 
 ### Task 2: Train and Evaluate Logistic Regression Model
 
-**Objective:**  
-Train a logistic regression model and evaluate it using AUC (Area Under ROC Curve).
+**Description:**
+- Split the dataset (80% train / 20% test)
+- Trained a `LogisticRegression` model
+- Evaluated model using AUC score
 
-**Steps:**
-1. Split dataset into training and test sets (80/20).
-2. Train a logistic regression model.
-3. Use `BinaryClassificationEvaluator` to evaluate.
+**Sample Output:**
+=== Logistic Regression === AUC: 0.7772
 
-**Code Output Example:**
-```
-Logistic Regression Model Accuracy: 0.83
-```
 
 ---
 
-###  Task 3: Feature Selection using Chi-Square Test
+### Task 3: Feature Selection using Chi-Square Test
 
-**Objective:**  
-Select the top 5 most important features using Chi-Square feature selection.
+**Description:**
+- Used `ChiSqSelector` to choose top 5 most relevant features
 
-**Steps:**
-1. Use `ChiSqSelector` to rank and select top 5 features.
-2. Print the selected feature vectors.
+**Sample Output:**
+=== Feature Selection (Chi-Square) === Top 5 selected features (first 5 rows): [Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 29.85}), label=0.0), Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 0.0, 3: 0.0, 4: 1889.5}), label=0.0), Row(selectedFeatures=SparseVector(5, {0: 1.0, 1: 1.0, 2: 1.0, 3: 0.0, 4: 108.15}), label=1.0)]
 
-**Code Output Example:**
-```
-+--------------------+-----------+
-|selectedFeatures    |ChurnIndex |
-+--------------------+-----------+
-|[0.0,29.85,0.0,0.0...|0.0        |
-|[1.0,56.95,1.0,0.0...|1.0        |
-|[0.0,53.85,0.0,1.0...|0.0        |
-|[1.0,42.30,0.0,0.0...|1.0        |
-|[0.0,70.70,0.0,1.0...|0.0        |
-+--------------------+-----------+
-
-```
 
 ---
 
 ### Task 4: Hyperparameter Tuning and Model Comparison
 
-**Objective:**  
-Use CrossValidator to tune models and compare their AUC performance.
+**Description:**
+- Tuned hyperparameters using `CrossValidator` (5-fold cross-validation)
+- Compared 4 classifiers: Logistic Regression, Decision Tree, Random Forest, Gradient Boosted Trees
+- Evaluated models using AUC
 
-**Models Used:**
-- Logistic Regression
-- Decision Tree Classifier
-- Random Forest Classifier
-- Gradient Boosted Trees (GBT)
+**Sample Output:**
+=== Model Tuning and Comparison === LogisticRegression AUC: 0.7730 DecisionTree AUC: 0.7290 RandomForest AUC: 0.8448 GBTClassifier AUC: 0.7620 Best model: RandomForest with AUC = 0.8448
 
-**Steps:**
-1. Define models and parameter grids.
-2. Use `CrossValidator` for 5-fold cross-validation.
-3. Evaluate and print best model results.
 
-**Code Output Example:**
-```
-Tuning LogisticRegression...
-LogisticRegression Best Model Accuracy (AUC): 0.84
-Best Params for LogisticRegression: regParam=0.01, maxIter=20
-
-Tuning DecisionTree...
-DecisionTree Best Model Accuracy (AUC): 0.77
-Best Params for DecisionTree: maxDepth=10
-
-Tuning RandomForest...
-RandomForest Best Model Accuracy (AUC): 0.86
-Best Params for RandomForest: maxDepth=15
-numTrees=50
-
-Tuning GBT...
-GBT Best Model Accuracy (AUC): 0.88
-Best Params for GBT: maxDepth=10
-maxIter=20
-
-```
 ---
 
-##  Execution Instructions
+## Steps to Run
 
-### 1. Prerequisites
-
-- Apache Spark installed
-- Python environment with `pyspark` installed
-- `customer_churn.csv` placed in the project directory
-
-### 2. Run the Project
-
-### 2. Run the Pr
-
+### Step 1: Install Dependencies
 ```bash
-spark-submit churn_prediction.py
+pip install pyspark
 ```
-### Make sure to include your original ouput and explain the code
+Step 2: (Optional) Generate Dataset
+```bash
+python dataset-generator.py
+```
+Step 3: Check Python Version
+```bash
+python --version
+```
+Step 4: Run the Analysis Script
+```bash
+spark-submit customer-churn-analysis.py
+```
+📂 Output File
+
+All task outputs are saved to a file:
+
+model_outputs.txt
+It includes:
+
+Feature vectors
+AUC scores
+Selected features
+Model comparison results
